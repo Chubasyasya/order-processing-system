@@ -14,6 +14,35 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
-test {
-    useJUnitPlatform()
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springVersion}"
+        }
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+
+    dependencies {
+        implementation("org.axonframework:axon-spring-boot-starter:${axonVersion}")
+        implementation("org.axonframework:axon-spring:${axonVersion}")
+        implementation("org.axonframework.extensions.kafka:axon-kafka-spring-boot-autoconfigure:4.9.0")
+
+        implementation 'org.springframework.kafka:spring-kafka'
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        implementation "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    }
 }
