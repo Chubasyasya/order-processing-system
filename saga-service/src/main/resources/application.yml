@@ -1,0 +1,12 @@
+axon:
+  eventhandling:
+    processors:
+      kafkaProcessor:
+        source: kafkaMessageSource
+
+axon.kafka:
+  client-id: saga-service
+  default-topic: axon-events
+  bootstrap-servers: localhost:9092
+  consumer:
+    group-id: saga-consumers

@@ -1,8 +1,10 @@
 package kpfu.itis.allayarova;
 
 import kpfu.itis.allayarova.command.CheckInventoryCommand;
-import kpfu.itis.allayarova.dto.request.OrderItem;
+import kpfu.itis.allayarova.command.CompleteOrderCommand;
+import kpfu.itis.allayarova.data.model.OrderItemEntity;
 import kpfu.itis.allayarova.event.InventoryCheckedEvent;
+import kpfu.itis.allayarova.event.OrderCompletedEvent;
 import kpfu.itis.allayarova.event.OrderCreatedEvent;
 import kpfu.itis.allayarova.command.ProcessPaymentCommand;
 import kpfu.itis.allayarova.event.PaymentProcessedEvent;
@@ -14,6 +16,7 @@ import org.axonframework.modelling.saga.StartSaga;
 import org.axonframework.spring.stereotype.Saga;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +34,7 @@ public class OrderManagementSaga {
         this.orderId=event.getId();
         log.info("Сага началась для заказа {}", orderId);
 
-        List<Long> productsId = event.getItems().stream().map(OrderItem::getProductId).collect(Collectors.toList());
+        List<Long> productsId = event.getItems().stream().map(OrderItemEntity::getProductId).collect(Collectors.toList());
 
         commandGateway.send(new CheckInventoryCommand(this.orderId, productsId));
     }
@@ -39,8 +42,9 @@ public class OrderManagementSaga {
     @SagaEventHandler(associationProperty = "orderId")
     public void on(InventoryCheckedEvent event) {
         log.info("Наличие товаров подтверждено для заказа {}", orderId);
+        BigDecimal fakeSum = new BigDecimal(10000);
 
-        commandGateway.send(new ProcessPaymentCommand(orderId, event.getTotalAmount()));
+        commandGateway.send(new ProcessPaymentCommand(orderId, fakeSum));
     }
 
     @SagaEventHandler(associationProperty = "orderId")
