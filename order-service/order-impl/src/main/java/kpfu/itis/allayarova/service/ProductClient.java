@@ -18,6 +18,7 @@ import static com.google.api.AnnotationsProto.http;
 @RequiredArgsConstructor
 @Component
 public class ProductClient {
+    private final String PRODUCTS_URL = "http://inventory-service/api/v1/products?ids={ids}&fields={fields}"
     private final RestTemplate restTemplate;
     public List<ProductView> getProductsByIdsAndFields(List<Long> ids, Set<String> fields) {
         String idsParam = ids.stream()
@@ -25,10 +26,8 @@ public class ProductClient {
                 .collect(Collectors.joining(","));
         String fieldsParam = String.join(",", fields);
 
-        String url = "http://inventory-service/api/v1/products?ids={ids}&fields={fields}";
-
         Products productsWrapper = restTemplate.getForObject(
-                url,
+                PRODUCTS_URL,
                 Products.class,
                 idsParam,
                 fieldsParam);
