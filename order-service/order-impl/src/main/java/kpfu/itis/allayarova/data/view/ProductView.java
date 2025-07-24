@@ -1,12 +1,14 @@
-package kpfu.itis.allayarova.query;
+package kpfu.itis.allayarova.data.view;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderQuery {
+@Builder
+public class ProductView {
     private Long id;
 }
