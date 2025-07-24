@@ -3,4 +3,6 @@ include 'order-service'
 include 'payment-service'
 include 'order-service:order-api'
 include 'order-service:order-impl'
+include 'saga-service'
+include 'inventory-service'
 
