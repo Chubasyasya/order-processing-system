@@ -1,6 +1,5 @@
 package kpfu.itis.allayarova.command;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value

@@ -1,9 +1,5 @@
 package kpfu.itis.allayarova.data.view;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import kpfu.itis.allayarova.data.model.OrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

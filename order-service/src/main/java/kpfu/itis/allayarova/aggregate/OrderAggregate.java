@@ -7,14 +7,12 @@ import kpfu.itis.allayarova.data.model.OrderStatus;
 import kpfu.itis.allayarova.event.OrderCompletedEvent;
 import kpfu.itis.allayarova.event.OrderCreatedEvent;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 

@@ -6,12 +6,12 @@ import kpfu.itis.allayarova.exception.OrderNotFoundException;
 import kpfu.itis.allayarova.mapper.OrderMapper;
 import kpfu.itis.allayarova.query.OrderQuery;
 import kpfu.itis.allayarova.repository.OrderRepository;
-import kpfu.itis.allayarova.exception.OrderNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OrderQueryHandler {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
