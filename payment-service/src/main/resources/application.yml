@@ -1,0 +1,21 @@
+axon:
+  server:
+    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
+  eventhandling:
+    processors:
+      kafkaProcessor:
+        source: kafkaMessageSource
+
+axon.kafka:
+  client-id: payment-service
+  default-topic: axon-events
+  bootstrap-servers: localhost:9092
+  producer:
+    properties:
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+
