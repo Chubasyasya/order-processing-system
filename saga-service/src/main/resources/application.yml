@@ -1,4 +1,6 @@
 axon:
+  server:
+    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
   eventhandling:
     processors:
       kafkaProcessor:

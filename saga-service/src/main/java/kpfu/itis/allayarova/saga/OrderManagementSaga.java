@@ -1,4 +1,4 @@
-package kpfu.itis.allayarova;
+package kpfu.itis.allayarova.saga;
 
 import kpfu.itis.allayarova.command.CheckInventoryCommand;
 import kpfu.itis.allayarova.command.CompleteOrderCommand;
