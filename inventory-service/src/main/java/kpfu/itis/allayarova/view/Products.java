@@ -1,14 +1,14 @@
-package kpfu.itis.allayarova.data.view;
+package kpfu.itis.allayarova.view;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ProductView {
-    private Long id;
+@Data
+public class Products {
+    private List<ProductView> products;
 }

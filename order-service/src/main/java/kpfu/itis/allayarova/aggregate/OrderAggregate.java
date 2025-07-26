@@ -1,7 +1,10 @@
 package kpfu.itis.allayarova.aggregate;
 
+import kpfu.itis.allayarova.command.CompleteOrderCommand;
 import kpfu.itis.allayarova.command.CreateOrderCommand;
-import kpfu.itis.allayarova.dto.request.OrderItem;
+import kpfu.itis.allayarova.data.model.OrderItemEntity;
+import kpfu.itis.allayarova.data.model.OrderStatus;
+import kpfu.itis.allayarova.event.OrderCompletedEvent;
 import kpfu.itis.allayarova.event.OrderCreatedEvent;
 import lombok.NoArgsConstructor;
 import lombok.Value;
@@ -22,7 +25,8 @@ public class OrderAggregate {
     Long id;
     Long customerId;
     LocalDateTime orderDate;
-    Set<OrderItem> items;
+    Set<OrderItemEntity> items;
+    OrderStatus status;
     @CommandHandler
     public OrderAggregate(CreateOrderCommand command) {
         AggregateLifecycle.apply(new OrderCreatedEvent(
@@ -41,5 +45,14 @@ public class OrderAggregate {
         this.items = event.getItems();
     }
 
+    @CommandHandler
+    public void handle(CompleteOrderCommand command) {
+        AggregateLifecycle.apply(new OrderCompletedEvent(command.getId()));
+    }
+
+    @EventSourcingHandler
+    public void on(OrderCompletedEvent event) {
+        this.status = OrderStatus.PROCESSING;
+    }
 
 }

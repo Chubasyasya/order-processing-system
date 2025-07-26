@@ -4,18 +4,18 @@ import kpfu.itis.allayarova.command.CheckInventoryCommand;
 import kpfu.itis.allayarova.event.InventoryCheckedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
-import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
 @Aggregate
 public class InventoryAggregate {
-    @AggregateIdentifier
+    @TargetAggregateIdentifier
     private Long orderId;
 
     @CommandHandler
     public InventoryAggregate(CheckInventoryCommand command){
-        AggregateLifecycle.apply(new InventoryCheckedEvent(command.getOrderId(), command.getProductsId()));
+        AggregateLifecycle.apply(new InventoryCheckedEvent(command.getOrderId(), command.getProductsId(), null));
     }
 
     @EventSourcingHandler

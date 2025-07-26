@@ -1,9 +1,6 @@
 package kpfu.itis.allayarova.command;
 
-import kpfu.itis.allayarova.dto.request.OrderItem;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import kpfu.itis.allayarova.data.model.OrderItemEntity;
 import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
@@ -15,5 +12,5 @@ public class CreateOrderCommand {
     @TargetAggregateIdentifier
     Long id;
     Long customerId;
-    Set<OrderItem> items;
+    Set<OrderItemEntity> items;
 }

@@ -1,9 +1,6 @@
 package kpfu.itis.allayarova.event;
 
-import kpfu.itis.allayarova.dto.request.OrderItem;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import kpfu.itis.allayarova.data.model.OrderItemEntity;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -15,5 +12,5 @@ public class OrderCreatedEvent {
     Long id;
     Long customerId;
     LocalDateTime orderDate;
-    Set<OrderItem> items;
+    Set<OrderItemEntity> items;
 }
