@@ -1,6 +1,7 @@
 axon:
-  server:
-    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
+  axonserver:
+    servers: axonserver:8124
+    ssl-enabled: false
   eventhandling:
     processors:
       kafkaProcessor:
@@ -9,6 +10,18 @@ axon:
 axon.kafka:
   client-id: saga-service
   default-topic: axon-events
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
   consumer:
     group-id: saga-consumers
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/mydb
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+
+minio:
+  url: http://minio-storage:9000
+  access-key: minioadmin
+  secret-key: minioadmin

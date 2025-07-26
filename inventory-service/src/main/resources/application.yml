@@ -1,6 +1,7 @@
 axon:
-  server:
-    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
+  axonserver:
+    servers: axonserver:8124
+    ssl-enabled: false
   eventhandling:
     processors:
       kafkaProcessor:

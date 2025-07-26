@@ -4,6 +4,8 @@ import kpfu.itis.allayarova.data.model.OrderItemEntity;
 import kpfu.itis.allayarova.data.view.OrderItemView;
 import kpfu.itis.allayarova.data.view.ProductView;
 
+import kpfu.itis.allayarova.input.OrderItemInput;
+import kpfu.itis.allayarova.util.SnowflakeIdGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
@@ -12,6 +14,8 @@ import java.util.Set;
 
 @Component
 public class OrderItemMapper{
+
+    private final SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
     public OrderItemMapper() {
     }
 
@@ -56,5 +60,13 @@ public class OrderItemMapper{
         }
 
 
+    }
+
+    public OrderItemEntity toEntity(OrderItemInput input){
+        OrderItemEntity orderItemEntity = new OrderItemEntity();
+        orderItemEntity.setId(idGenerator.nextId());
+        orderItemEntity.setQuantity(input.getQuantity());
+        orderItemEntity.setProductId(input.getProductId());
+        return orderItemEntity;
     }
 }

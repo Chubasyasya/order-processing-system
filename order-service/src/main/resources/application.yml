@@ -1,6 +1,7 @@
 axon:
-  server:
-    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
+  axonserver:
+    servers: axonserver:8124
+    ssl-enabled: false
   eventhandling:
     processors:
       kafkaProcessor:
@@ -9,7 +10,7 @@ axon:
 axon.kafka:
   client-id: order-service
   default-topic: axon-events
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
   producer:
     properties:
       key.serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -24,5 +25,5 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true

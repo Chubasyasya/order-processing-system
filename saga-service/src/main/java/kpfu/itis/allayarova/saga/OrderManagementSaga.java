@@ -1,13 +1,8 @@
 package kpfu.itis.allayarova.saga;
 
-import kpfu.itis.allayarova.command.CheckInventoryCommand;
-import kpfu.itis.allayarova.command.CompleteOrderCommand;
+import kpfu.itis.allayarova.command.*;
 import kpfu.itis.allayarova.data.model.OrderItemEntity;
-import kpfu.itis.allayarova.event.InventoryCheckedEvent;
-import kpfu.itis.allayarova.event.OrderCompletedEvent;
-import kpfu.itis.allayarova.event.OrderCreatedEvent;
-import kpfu.itis.allayarova.command.ProcessPaymentCommand;
-import kpfu.itis.allayarova.event.PaymentProcessedEvent;
+import kpfu.itis.allayarova.event.*;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
@@ -29,7 +24,7 @@ public class OrderManagementSaga {
     private Long orderId;
 
     @StartSaga
-    @SagaEventHandler(associationProperty = "orderId")
+    @SagaEventHandler(associationProperty = "id")
     public void on(OrderCreatedEvent event){
         this.orderId=event.getId();
         log.info("Сага началась для заказа {}", orderId);
@@ -48,10 +43,38 @@ public class OrderManagementSaga {
     }
 
     @SagaEventHandler(associationProperty = "orderId")
+    public void on(InventoryCheckFailedEvent event) {
+        log.info("Наличие товаров не подтверждено для заказа {}", orderId);
+        CancelOrderCommand command = new CancelOrderCommand(event.getOrderId());
+        commandGateway.send(command);
+    }
+
+    @SagaEventHandler(associationProperty = "orderId")
     public void on(PaymentProcessedEvent event) {
         log.info("Оплата прошла успешно для заказа {}", orderId);
 
         commandGateway.send(new CompleteOrderCommand(orderId));
+    }
+
+    // Оплата не прошла
+    // Отменяем резервацию товара
+    @SagaEventHandler(associationProperty = "orderId")
+    public void on(PaymentProcessFailedEvent event) {
+        log.info("Оплата не прошла, отменяем резерв для заказа {}", event.getOrderId());
+        commandGateway.send(new CancelReservationCommand(event.getOrderId()));
+    }
+
+    // Отмечаем что заказ отменен
+    @SagaEventHandler(associationProperty = "orderId")
+    public void on(ReservationCancelledEvent event) {
+        log.info("Резерв отменён, отменяем заказ {}", event.getOrderId());
+        commandGateway.send(new CancelOrderCommand(event.getOrderId()));
+    }
+    // Завершаем сагу
+    @EndSaga
+    @SagaEventHandler(associationProperty = "orderId")
+    public void on(OrderCancelledEvent event) {
+        log.info("Заказ {} отменён, завершаем сагу", event.getOrderId());
     }
 
     @EndSaga

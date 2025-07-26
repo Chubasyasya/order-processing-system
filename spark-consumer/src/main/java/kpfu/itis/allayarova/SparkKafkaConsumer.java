@@ -14,14 +14,14 @@ public class SparkKafkaConsumer {
         Dataset<Row> df = spark
                 .readStream()
                 .format("kafka")
-                .option("kafka.bootstrap.servers", "localhost:9092")
+                .option("kafka.bootstrap.servers", "kafka:9092")
                 .option("subscribe", "axon-events")
                 .option("startingOffsets", "latest")
                 .load();
 
-        Dataset<Row> orders = df.selectExpr("CAST(value AS STRING) as json");
+        Dataset<Row> json = df.selectExpr("CAST(value AS STRING)");
 
-        orders.writeStream()
+        json.writeStream()
                 .outputMode("append")
                 .format("console")
                 .start()

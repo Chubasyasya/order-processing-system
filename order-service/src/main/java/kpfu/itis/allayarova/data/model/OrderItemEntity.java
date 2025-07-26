@@ -1,9 +1,7 @@
 package kpfu.itis.allayarova.data.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -15,23 +13,24 @@ import java.math.BigDecimal;
 public class OrderItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_id", nullable = true)
     private Long productId;
 
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_name", nullable = true)
     private String productName;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity", nullable = true)
     private Integer quantity;
 
-    @Column(name = "price", precision = 12, scale = 2, nullable = false)
+    @Column(name = "price", precision = 12, scale = 2, nullable = true)
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private OrderEntity order;
 
     @Transient

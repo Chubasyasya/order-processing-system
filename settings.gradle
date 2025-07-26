@@ -5,5 +5,5 @@ include 'order-service'
 include 'saga-service'
 include 'inventory-service'
 include 'payment-service'
-include 'analytics-service'
+include 'spark-consumer'
 

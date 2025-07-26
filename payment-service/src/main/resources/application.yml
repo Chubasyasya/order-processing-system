@@ -1,6 +1,7 @@
 axon:
-  server:
-    addresses: ${AXON_SERVER_ADDRESSES:axonserver:8124}
+  axonserver:
+    servers: axonserver:8124
+    ssl-enabled: false
   eventhandling:
     processors:
       kafkaProcessor:
@@ -9,13 +10,13 @@ axon:
 axon.kafka:
   client-id: payment-service
   default-topic: axon-events
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
   producer:
     properties:
       key.serializer: org.apache.kafka.common.serialization.StringSerializer
       value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
 minio:
-  url: http://localhost:9000
+  url: http://minio-storage:9000
   access-key: minioadmin
   secret-key: minioadmin
 
