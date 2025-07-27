@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(':order-service')
+    implementation project(':inventory-service')
+    implementation project(':payment-service')
+}

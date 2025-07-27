@@ -1,0 +1,29 @@
+axon:
+  axonserver:
+    servers: axonserver:8124
+    ssl-enabled: false
+  eventhandling:
+    processors:
+      kafkaProcessor:
+        source: kafkaMessageSource
+
+axon.kafka:
+  client-id: inventory-service
+  default-topic: axon-events
+  bootstrap-servers:  kafka:9092
+  producer:
+    properties:
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/mydb
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
